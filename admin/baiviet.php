@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
         integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
         crossorigin="anonymous" />
+         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <style>
         button {
             margin: 35px 0;
@@ -56,7 +57,7 @@
     <?php
 
                   include '../connect.php';
-                  $query = mysqli_query($conn,"SELECT * FROM kinhnghiem");
+                  $query = mysqli_query($conn,"SELECT * FROM baiviet");
                   
                  
 
@@ -72,10 +73,10 @@
             <thead>
                 <tr>
                     <th>STT</th>
-                    <th>Thời gian</th>
-                    <th>Công việc</th>
-                    <th>Công ty</th>
-                    <th>Logo</th>
+                    <th>Tên bài viết</th>
+                    <th>Nội dung</th>
+                    <th>Ảnh</th>
+                    
                     <th></th>
                     <th></th>
                 </tr>
@@ -84,19 +85,18 @@
                 <?php
   
                  while( $result = $query -> fetch_assoc()) {
-                  $stt = $result['id'];
-                  $congviec = $result['congviec'];
-                  $time = $result['thoigian'];
-                  $congty = $result['congty'];           
-                  $id = $result['id'];
+                  $idbv = $result['id'];
+                  $text = $result['text'];
+                  $imgbv = $result['img'];
+                  $title = $result['title'];           
+                  
                      echo'<tr>
-                    <td>'.$stt.'</td>
-                     <td>'.$time.'</td>
-                     <td>'.$congviec.'</td>
-                     <td>'.$congty.'</td>
+                    <td>'.$idbv.'</td>
+                     <td>'.$title.'</td>
+                     <td>'.$text.'</td>
                      <td><img src= ../assets/img/'.$result["img"].'></td>
                      <td><a href= ""  data-toggle="modal" data-target="#myModal1" class="editbtn"><i class="fas fa-edit"></i></a></td>
-                     <td><a href="xoa_kn.php?id='.$id.'"><i class="fas fa-trash-alt"></i></a></td>                     
+                     <td><a href="xoa_bv.php?id='.$idbv.'"><i class="fas fa-trash-alt"></i></a></td>                     
                      </tr>';
                  }
                 
@@ -112,22 +112,21 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
 
-                <h1>Nhập thông tin</h1>
-                <form method="post" action="them_kn.php" enctype="multipart/form-data">
+                <h1>Nhập thông tin bài viết</h1>
+                <form method="post" action="them_bv.php" enctype="multipart/form-data">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Thời gian</label>
-                        <input type="text" class="form-control" name="time" required>
+                        <label for="exampleInputEmail1">Tiêu đề bài viết</label>
+                        <input type="text" class="form-control" name="title" required>
 
                     </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Công việc</label>
-                        <input type="text"  class="form-control" name="congviec" required>
-
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Công ty</label>
-                        <input type="text" class="form-control" name="congty" required>
-                    </div>
+                    <div class="input-group">
+  <div class="input-group-prepend">
+    <span class="input-group-text">Nội dung bài viết</span>
+  </div>
+  <textarea name="noidungbv"class="form-control" aria-label="With textarea" required></textarea>
+</div>
+<br>
+                    Hình ảnh
                     <div class="form-group">
                         <input type="file"  name="file" value="">
                     </div>
@@ -139,6 +138,40 @@
             </div>
         </div>
     </div>
+    <?php
+   if(isset($_GET['them']))
+{
+   echo '<script type="text/javascript">
+  
+swal("Yessss", "Thêm thành công", "success");
+
+
+                        </script>';
+                     
+}
+if(isset($_GET['xoa']))
+{
+   echo '<script type="text/javascript">
+
+swal("Yessss", "Xóa thành công", "success");
+
+
+                        </script>';
+         
+                        
+}
+if(isset($_GET['edit']))
+{
+  
+   echo '<script type="text/javascript">
+
+swal("Yessss", "Sửa thành công", "success");
+
+
+                        </script>';
+            
+}
+    ?>
     <!------------------------------------------------->
     <div class="modal" id="myModal1">
         <div class="modal-dialog modal-lg">
@@ -146,30 +179,27 @@
                 
                     <div class="row">
                         <div class="col-9">
-                            <h1>Sửa thông tin</h1>
-                            <form method="post" action="edit_kn.php?edit=true" enctype="multipart/form-data">
+                            <h1>Sửa bài viết</h1>
+                            <form method="post" action="edit_bv.php?edit=true" enctype="multipart/form-data">
                             <div class="form-group">
                                     <label for="exampleInputEmail1">ID</label>
                                     <input id="id" type="text" class="form-control" name="id"  readonly="true">
 
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Thời gian</label>
-                                    <input id="time" type="text" class="form-control" name="time1" required>
+                                    <label for="exampleInputEmail1">Tiêu đề bài viết</label>
+                                    <input id="title" type="text" class="form-control" name="title" required>
 
                                 </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Công việc</label>
-                                    <input type="text" id="cviec" class="form-control" name="congviec1" required>
-
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Công ty</label>
-                                    <input type="text" id="cty" class="form-control" name="congty1" required>
-
-                                </div>
-
                                 
+                               
+             <div class="input-group">
+              <div class="input-group-prepend">
+              <span class="input-group-text">Nội dung bài viết</span>
+                 </div>
+             <textarea id="noidung"  name="noidungbv"class="form-control" aria-label="With textarea" required></textarea>
+              </div>
+                              <br>  
 
                                 <div class="form-group">
                                     <input type="file" name="file" value="">
@@ -200,10 +230,9 @@
                    return $(this).text();
                }).get();
                $('#id').val(data[0]);
-               $('#time').val(data[1]);
-               $('#cviec').val(data[2]);
-               $('#cty').val(data[3]);
-               $('#img').val(data[4]);   
+               $('#title').val(data[1]);
+               $('#noidung').val(data[2]);
+                  
 
             });
         });

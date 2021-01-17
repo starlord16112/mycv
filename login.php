@@ -13,8 +13,9 @@ if (!isset($_POST['email']))
 else{
     if($email == "manhnguyen16112@gmail.com" && $pass == "111")
     {
-    header('Location: http://localhost:81/mycv/admin/');
-    $_SESSION['admin'] = 'login';
+         $_SESSION['admin'] = 'login';
+         header('Location: http://localhost:81/mycv/admin/');
+   
     
     }
     else

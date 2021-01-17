@@ -18,7 +18,12 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+    <style>
+        #contact {
+            background: #1ABC9C;
+        }
+       
+    </style>
 </head>
 
 <body id="page-top">
@@ -36,7 +41,7 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                            href="#portfolio">Dự án</a></li>
+                            href="#portfolio">Bài viết</a></li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
                             href="#about">Thông tin</a></li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
@@ -44,54 +49,149 @@
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
                             href="#contact">Liên hệ</a></li>
 
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                            href="login.php" data-toggle="modal" data-target="#myModal" s>Chỉnh
+                    <li id="btn_login" class="nav-item mx-0 mx-lg-1"><a
+                            class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="login.php"
+                            data-toggle="modal" data-target="#myModal">Chỉnh
                             sửa</a></li>
-
+                    <li id="btn_admin" class="nav-item mx-0 mx-lg-1"><a
+                            class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="admin/">Admin</a></li>
 
                 </ul>
             </div>
         </div>
     </nav>
-    <div class="modal" id="myModal">
+    <?php
+     session_start();
+     if(isset($_SESSION['admin']))
+     {
+      echo '<script>document.getElementById("btn_admin").style.display = "block";
+      document.getElementById("btn_login").style.display = "none";
+      </script>';
+      }
+      else
+      {
+          echo '<script>document.getElementById("btn_admin").style.display = "none";
+            document.getElementById("btn_login").style.display = "block";
+        </script>';
+      }
+ 
+?>
+
+    <!-- <div class="modal" id="myModal">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
+                
+                        <h1>Bạn cần đăng nhập</h1>
+                        <form method="post" action="login.php">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Email address</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp" placeholder="Enter email" name="email" required>
+                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with
+                                    anyone
+                                    else.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Password</label>
+                                <input type="password" class="form-control" id="exampleInputPassword1"
+                                    placeholder="Password" name="pass" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary" name="submit">Submit</button>
 
-                <h1>Bạn cần đăng nhập</h1>
-                <form method="post" action="login.php">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Email address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                            placeholder="Enter email" name="email" required>
-                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
-                            else.</small>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"
-                            name="pass" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary" name="submit">Submit</button>
-                  
-                </form>
+                        </form>
+                   
             </div>
         </div>
+    </div> -->
+
+
+     <div class="modal" id="myModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+        <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    
+            <div class="panel panel-info" >
+                    <div class="panel-heading">
+                        <div class="panel-title">Sign In</div>
+                        <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="#">Forgot password?</a></div>
+                    </div>     
+
+                    <div style="padding-top:30px" class="panel-body" >
+
+                        <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+                            
+                        <form method="post" action="login.php" id="loginform" class="form-horizontal" role="form">
+                                    
+                            <div style="margin-bottom: 25px" class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                        <input name="email" required id="login-username" type="email" class="form-control" value="" placeholder="username or email">                                        
+                                    </div>
+                                
+                            <div style="margin-bottom: 25px" class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                        <input id="login-password" type="password" class="form-control"name="pass" required placeholder="password">
+                                    </div>
+                                    
+
+                                
+                            <div class="input-group">
+                                      <div class="checkbox">
+                                        <label>
+                                          <input id="login-remember" type="checkbox" name="remember" value="1"> Remember me
+                                        </label>
+                                      </div>
+                                    </div>
+
+
+                                <div style="margin-top:10px" class="form-group">
+                                    <!-- Button -->
+
+                                    <div class="col-sm-12 controls">
+                                      <button type="submit" class="btn btn-primary" name="submit">Login</button>
+                                      <a id="btn-fblogin" href="#" class="btn btn-primary">Login with Facebook</a>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <div class="col-md-12 control">
+                                        <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" >
+                                            Don't have an account! 
+                                        <a href="#" onClick="$('#loginbox').hide(); $('#signupbox').show()">
+                                            Sign Up Here
+                                        </a>
+                                        </div>
+                                    </div>
+                                </div>    
+                            </form>     
+
+
+
+                        </div>                     
+                    </div>  
+        </div>
+               </div>
+        </div>
     </div>
-                    <?php
+
+    <?php
                     include 'connect.php';
                     $query = mysqli_query($conn,"SELECT * FROM thongtin");
                     $result = $query -> fetch_assoc();
                   $avatar = $result['avatar'];
                   $ten = $result["ten"];
                   $dc = $result['diachi'];
+                  $sdt = $result['sdt'];
+                  $email = $result['mail'];
+                  $hocvan = $result['hocvan'];
                     if(isset($_GET['login']))
                     {
                         echo '<script type="text/javascript">
-                   
-	                 swal ( "Oops" ,  "Sai tài khoản hoặc mật khẩu" ,  "error" )
-                        
-                    
-                     </script>';
+
+                            swal("Oops", "Sai tài khoản hoặc mật khẩu", "error")
+
+
+                        </script>';
                        
                     }
                     
@@ -100,7 +200,7 @@
     <header class="masthead bg-primary text-white text-center">
         <div class="container d-flex align-items-center flex-column">
             <!-- Masthead Avatar Image-->
-            <img class="masthead-avatar mb-5" src= <?php echo"assets/img/".$avatar;?> alt="" />
+            <img class="masthead-avatar mb-5" src=<?php echo"assets/img/".$avatar;?> alt="" />
             <!-- Masthead Heading-->
             <h1 class="masthead-heading text-uppercase mb-0"><?php echo $ten;?></h1>
             <!-- Icon Divider-->
@@ -117,29 +217,79 @@
     <!-- Portfolio Section-->
     <section class="page-section portfolio" id="portfolio">
         <div class="container">
+       
             <!-- Portfolio Section Heading-->
-            <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Dự án</h2>
+            <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Bài viết</h2>
             <!-- Icon Divider-->
             <div class="divider-custom">
                 <div class="divider-custom-line"></div>
                 <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                 <div class="divider-custom-line"></div>
             </div>
+
             <!-- Portfolio Grid Items-->
             <div class="row justify-content-center">
                 <!-- Portfolio Item 1-->
-                <div class="col-md-6 col-lg-4 mb-5">
-                    <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal1">
+                     <?php
+         $querybv = mysqli_query($conn,"SELECT * FROM baiviet");
+                 while( $resultbv = $querybv -> fetch_assoc()) {
+                  $idbv = $resultbv['id'];
+                  $title = $resultbv['title'];
+                  $text = $resultbv['text'];
+                  $imgbv = $resultbv['img']; 
+                  echo  '<div class="col-md-6 col-lg-4 mb-5">
+                    <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal'.$idbv.'">
                         <div
                             class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                             <div class="portfolio-item-caption-content text-center text-white"><i
                                     class="fas fa-plus fa-3x"></i></div>
                         </div>
-                        <img class="img-fluid" src="assets/img/portfolio/cabin.png" alt="" />
+                        <img class="img-fluid" src="assets/img/'.$imgbv.'" alt="" />
+                    </div>
+                </div>'   ;      
+                 
+                 
+                 echo '<div class="portfolio-modal modal fade" id="portfolioModal'.$idbv.'" tabindex="-1" role="dialog"
+        aria-labelledby="portfolioModal1Label" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="fas fa-times"></i></span>
+                </button>
+                <div class="modal-body text-center">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <!-- Portfolio Modal - Title-->
+                                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0"
+                                    id="portfolioModal1Label">'.$title.'</h2>
+                                <!-- Icon Divider-->
+                                <div class="divider-custom">
+                                    <div class="divider-custom-line"></div>
+                                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                                    <div class="divider-custom-line"></div>
+                                </div>
+                                <!-- Portfolio Modal - Image-->
+                                <img class="img-fluid rounded mb-5" src="assets/img/'.$imgbv.'" alt="" />
+                                <!-- Portfolio Modal - Text-->
+                                <p class="mb-5">'.$text.'
+                                </p>
+                                <button class="btn btn-primary" data-dismiss="modal">
+                                    <i class="fas fa-times fa-fw"></i>
+                                    Close Window
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <!-- Portfolio Item 2-->
-                <div class="col-md-6 col-lg-4 mb-5">
+            </div>
+        </div>
+    </div>';
+                 }
+        ?>
+                
+               
+                <!-- <div class="col-md-6 col-lg-4 mb-5">
                     <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal2">
                         <div
                             class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
@@ -149,7 +299,7 @@
                         <img class="img-fluid" src="assets/img/portfolio/cake.png" alt="" />
                     </div>
                 </div>
-                <!-- Portfolio Item 3-->
+                
                 <div class="col-md-6 col-lg-4 mb-5">
                     <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal3">
                         <div
@@ -160,8 +310,8 @@
                         <img class="img-fluid" src="assets/img/portfolio/circus.png" alt="" />
                     </div>
                 </div>
-                <!-- Portfolio Item 4-->
-                <div class="col-md-6 col-lg-4 mb-5 mb-lg-0">
+            
+                <div class="col-md-6 col-lg-4 mb-5">
                     <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal4">
                         <div
                             class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
@@ -171,8 +321,8 @@
                         <img class="img-fluid" src="assets/img/portfolio/game.png" alt="" />
                     </div>
                 </div>
-                <!-- Portfolio Item 5-->
-                <div class="col-md-6 col-lg-4 mb-5 mb-md-0">
+              
+                <div class="col-md-6 col-lg-4 mb-5">
                     <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal5">
                         <div
                             class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
@@ -182,7 +332,7 @@
                         <img class="img-fluid" src="assets/img/portfolio/safe.png" alt="" />
                     </div>
                 </div>
-                <!-- Portfolio Item 6-->
+                
                 <div class="col-md-6 col-lg-4">
                     <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal6">
                         <div
@@ -192,7 +342,8 @@
                         </div>
                         <img class="img-fluid" src="assets/img/portfolio/submarine.png" alt="" />
                     </div>
-                </div>
+                </div> -->
+
             </div>
         </div>
     </section>
@@ -202,7 +353,7 @@
 
         <div class="container">
             <!-- About Section Heading-->
-            <h2 class="page-section-heading text-center text-uppercase text-white">About</h2>
+            <h2 class="page-section-heading text-center text-uppercase text-white">Giới thiệu</h2>
             <!-- Icon Divider-->
             <div class="divider-custom divider-light">
                 <div class="divider-custom-line"></div>
@@ -212,17 +363,13 @@
             <!-- About Section Content-->
             <div class="row">
                 <div class="col-lg-4 ml-auto">
-                    <p class="lead">Freelancer is a free bootstrap theme created by Start Bootstrap. The
-                        download
-                        includes the complete source files including HTML, CSS, and JavaScript as well as
-                        optional SASS
-                        stylesheets for easy customization.</p>
+                    <p class="lead">Em có đam mê với công nghệ thông tin,là một người điềm tĩnh,thích ứng nhanh với môi trường mới,không ngại khó,hòa đồng và luôn học hỏi những kiến thức ,công nghệ mới ,cố gắng tìm giải pháp cho mọi vấn đề. </p>
                 </div>
                 <div class="col-lg-4 mr-auto">
-                    <p class="lead">You can create your own custom avatar for the masthead, change the icon
-                        in the
-                        dividers, and add your email address to the contact form to make it fully
-                        functional!</p>
+                    <p class="lead"><?php echo '<i class="far fa-envelope-open"></i> '.$email.'<br>';
+                    echo '<i class="fas fa-phone"></i>  '.$sdt.'<br>'; 
+                    echo '<i class="fas fa-map-marker-alt"></i> '.$dc.'<br>'; 
+                    echo '<i class="fas fa-graduation-cap"></i> '.$hocvan.'<br>';  ?></p>
                 </div>
             </div>
             <!-- About Section Button-->
@@ -235,7 +382,46 @@
         </div>
     </section>
     <!-- kinh nghiem section -->
-    <section class="page-section bg-primary text-white mb-0" id="kinhnghiem">
+    <section class="page-section  mb-0" id="kinhnghiem">
+        <div class="container">
+            <!-- Contact Section Heading-->
+            <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Kinh nghiệm</h2>
+            <!-- Icon Divider-->
+            <div class="divider-custom">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                <div class="divider-custom-line"></div>
+            </div>
+
+        </div>
+        <div class="container">
+
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-8 col-lg-6 pb-5">
+                    <?php
+                 $query = mysqli_query($conn,"SELECT * FROM kinhnghiem");
+                 while($row = $query->fetch_assoc()) {
+                     echo '<div class="d-flex flex-row mt-3 exp-container"><img src= assets/img/'.$row["img"].' width="45" height="45">
+                    <div class="work-experience ml-1"><span class="font-weight-bold d-block">'.$row["congviec"].'</span><span class="d-block text-black-50 labels">'.$row["congty"].'</span><span class="d-block text-black-50 labels">'.$row["thoigian"].'</span></div>
+                </div>
+                <hr>' ;
+              }
+            
+            ?>
+                    <!--  <div class="d-flex flex-row mt-3 exp-container"><img src="https://i.imgur.com/azSfBM3.png" width="45" height="45">
+                    <div class="work-experience ml-1"><span class="font-weight-bold d-block">Senior UI/UX Designer</span><span class="d-block text-black-50 labels">Twitter Inc.</span><span class="d-block text-black-50 labels">March,2017 - May 2020</span></div>
+                </div>
+                <hr>
+                <div class="d-flex flex-row mt-3 exp-container"><img src="https://img.icons8.com/color/100/000000/facebook.png" width="45" height="45">
+                    <div class="work-experience ml-1"><span class="font-weight-bold d-block">Senior UI/UX Designer</span><span class="d-block text-black-50 labels">Facebook Inc.</span><span class="d-block text-black-50 labels">March,2017 - May 2020</span></div>
+                </div>
+                <hr>
+                <div class="d-flex flex-row mt-3 exp-container"><img src="https://img.icons8.com/color/50/000000/google-logo.png" width="45" height="45">
+                    <div class="work-experience ml-1"><span class="font-weight-bold d-block">UI/UX Designer</span><span class="d-block text-black-50 labels">Google Inc.</span><span class="d-block text-black-50 labels">March,2017 - May 2020</span></div>
+                </div> -->
+                </div>
+            </div>
+        </div>
     </section>
     <!-- Contact Section-->
     <section class="page-section" id="contact">
@@ -249,11 +435,11 @@
                 <div class="divider-custom-line"></div>
             </div>
             <!-- Contact Section Form-->
+        </div>
+        <div class="container">
 
-<div class="container">
-    
-	<div class="row justify-content-center">
-		<div class="col-12 col-md-8 col-lg-6 pb-5">
+            <div class="row justify-content-center ">
+                <div class="col-12 col-md-8 col-lg-6 pb-5">
 
 
                     <!--Form with header-->
@@ -274,7 +460,8 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text"><i class="fa fa-user text-info"></i></div>
                                         </div>
-                                        <input type="text" class="form-control" id="nombre" name="ct_name" placeholder="Your name" required>
+                                        <input type="text" class="form-control" id="nombre" name="ct_name"
+                                            placeholder="Your name" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -282,7 +469,8 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text"><i class="fa fa-envelope text-info"></i></div>
                                         </div>
-                                        <input type="email" class="form-control" id="nombre" name="ct_email" placeholder="example@gmail.com" required>
+                                        <input type="email" class="form-control" id="nombre" name="ct_email"
+                                            placeholder="example@gmail.com" required>
                                     </div>
                                 </div>
 
@@ -291,7 +479,8 @@
                                         <div class="input-group-prepend">
                                             <div class="input-group-text"><i class="fa fa-comment text-info"></i></div>
                                         </div>
-                                        <textarea class="form-control" name = "mess" placeholder="Message" required></textarea>
+                                        <textarea class="form-control" name="mess" placeholder="Message"
+                                            required></textarea>
                                     </div>
                                 </div>
 
@@ -306,10 +495,10 @@
 
 
                 </div>
-	</div>
-</div>
-            
-           <!--  <div class="row">
+            </div>
+        </div>
+
+        <!--  <div class="row">
                 <div class="col-lg-8 mx-auto">
                     
                     <form id="contactForm" name="sentMessage" novalidate="novalidate" method="post" action = "sendmail.php">
@@ -366,7 +555,7 @@
                     <h4 class="text-uppercase mb-4">Location</h4>
                     <p class="lead mb-0">
                         <?php echo $dc;?>
-                      
+
                     </p>
                 </div>
                 <!-- Footer Social Icons-->
@@ -374,7 +563,8 @@
                     <h4 class="text-uppercase mb-4">Around the Web</h4>
                     <a class="btn btn-outline-light btn-social mx-1" href="https://www.facebook.com/manhpt.tlu/"><i
                             class="fab fa-fw fa-facebook-f"></i></a>
-                    <a class="btn btn-outline-light btn-social mx-1" href="https://twitter.com/MnhNguy61610230"><i class="fab fa-fw fa-twitter"></i></a>
+                    <a class="btn btn-outline-light btn-social mx-1" href="https://twitter.com/MnhNguy61610230"><i
+                            class="fab fa-fw fa-twitter"></i></a>
                     <a class="btn btn-outline-light btn-social mx-1" href="#!"><i
                             class="fab fa-fw fa-linkedin-in"></i></a>
                     <a class="btn btn-outline-light btn-social mx-1" href="#!"><i class="fab fa-fw fa-dribbble"></i></a>
@@ -402,48 +592,8 @@
     </div>
     <!-- Portfolio Modals-->
     <!-- Portfolio Modal 1-->
-    <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog"
-        aria-labelledby="portfolioModal1Label" aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"><i class="fas fa-times"></i></span>
-                </button>
-                <div class="modal-body text-center">
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8">
-                                <!-- Portfolio Modal - Title-->
-                                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0"
-                                    id="portfolioModal1Label">Log Cabin</h2>
-                                <!-- Icon Divider-->
-                                <div class="divider-custom">
-                                    <div class="divider-custom-line"></div>
-                                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                                    <div class="divider-custom-line"></div>
-                                </div>
-                                <!-- Portfolio Modal - Image-->
-                                <img class="img-fluid rounded mb-5" src="assets/img/portfolio/cabin.png" alt="" />
-                                <!-- Portfolio Modal - Text-->
-                                <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                    Mollitia neque
-                                    assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore
-                                    quisquam
-                                    velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur
-                                    itaque. Nam.
-                                </p>
-                                <button class="btn btn-primary" data-dismiss="modal">
-                                    <i class="fas fa-times fa-fw"></i>
-                                    Close Window
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Portfolio Modal 2-->
+    
+   <!-- 
     <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog"
         aria-labelledby="portfolioModal2Label" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
@@ -455,18 +605,18 @@
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-lg-8">
-                                <!-- Portfolio Modal - Title-->
+                              
                                 <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0"
                                     id="portfolioModal2Label">Tasty Cake</h2>
-                                <!-- Icon Divider-->
+                             
                                 <div class="divider-custom">
                                     <div class="divider-custom-line"></div>
                                     <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                                     <div class="divider-custom-line"></div>
                                 </div>
-                                <!-- Portfolio Modal - Image-->
+                             
                                 <img class="img-fluid rounded mb-5" src="assets/img/portfolio/cake.png" alt="" />
-                                <!-- Portfolio Modal - Text-->
+                                
                                 <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                                     Mollitia neque
                                     assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore
@@ -485,8 +635,8 @@
             </div>
         </div>
     </div>
-    <!-- Portfolio Modal 3-->
-    <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog"
+     -->
+    <!-- <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog"
         aria-labelledby="portfolioModal3Label" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
@@ -497,18 +647,18 @@
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-lg-8">
-                                <!-- Portfolio Modal - Title-->
+                                
                                 <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0"
                                     id="portfolioModal3Label">Circus Tent</h2>
-                                <!-- Icon Divider-->
+                                
                                 <div class="divider-custom">
                                     <div class="divider-custom-line"></div>
                                     <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                                     <div class="divider-custom-line"></div>
                                 </div>
-                                <!-- Portfolio Modal - Image-->
+                                
                                 <img class="img-fluid rounded mb-5" src="assets/img/portfolio/circus.png" alt="" />
-                                <!-- Portfolio Modal - Text-->
+                               
                                 <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                                     Mollitia neque
                                     assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore
@@ -527,7 +677,7 @@
             </div>
         </div>
     </div>
-    <!-- Portfolio Modal 4-->
+   
     <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog"
         aria-labelledby="portfolioModal4Label" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
@@ -539,18 +689,18 @@
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-lg-8">
-                                <!-- Portfolio Modal - Title-->
+                               
                                 <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0"
                                     id="portfolioModal4Label">Controller</h2>
-                                <!-- Icon Divider-->
+                                
                                 <div class="divider-custom">
                                     <div class="divider-custom-line"></div>
                                     <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                                     <div class="divider-custom-line"></div>
                                 </div>
-                                <!-- Portfolio Modal - Image-->
+                              
                                 <img class="img-fluid rounded mb-5" src="assets/img/portfolio/game.png" alt="" />
-                                <!-- Portfolio Modal - Text-->
+                         
                                 <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                                     Mollitia neque
                                     assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore
@@ -569,7 +719,7 @@
             </div>
         </div>
     </div>
-    <!-- Portfolio Modal 5-->
+ 
     <div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog"
         aria-labelledby="portfolioModal5Label" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
@@ -581,18 +731,18 @@
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-lg-8">
-                                <!-- Portfolio Modal - Title-->
+                               
                                 <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0"
                                     id="portfolioModal5Label">Locked Safe</h2>
-                                <!-- Icon Divider-->
+                         
                                 <div class="divider-custom">
                                     <div class="divider-custom-line"></div>
                                     <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                                     <div class="divider-custom-line"></div>
                                 </div>
-                                <!-- Portfolio Modal - Image-->
+                              
                                 <img class="img-fluid rounded mb-5" src="assets/img/portfolio/safe.png" alt="" />
-                                <!-- Portfolio Modal - Text-->
+                               
                                 <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                                     Mollitia neque
                                     assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore
@@ -611,7 +761,7 @@
             </div>
         </div>
     </div>
-    <!-- Portfolio Modal 6-->
+
     <div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog"
         aria-labelledby="portfolioModal6Label" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
@@ -623,18 +773,18 @@
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-lg-8">
-                                <!-- Portfolio Modal - Title-->
+                                
                                 <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0"
                                     id="portfolioModal6Label">Submarine</h2>
-                                <!-- Icon Divider-->
+                               
                                 <div class="divider-custom">
                                     <div class="divider-custom-line"></div>
                                     <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                                     <div class="divider-custom-line"></div>
                                 </div>
-                                <!-- Portfolio Modal - Image-->
+                               
                                 <img class="img-fluid rounded mb-5" src="assets/img/portfolio/submarine.png" alt="" />
-                                <!-- Portfolio Modal - Text-->
+                                
                                 <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                                     Mollitia neque
                                     assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore
@@ -652,7 +802,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- Bootstrap core JS-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -663,32 +813,7 @@
     <script src="assets/mail/contact_me.js"></script>
     <!-- Core theme JS-->
     <script src="js/scripts.js"></script>
-   <!-- Load Facebook SDK for JavaScript -->
-      <div id="fb-root"></div>
-      <script>
-        window.fbAsyncInit = function() {
-          FB.init({
-            xfbml            : true,
-            version          : 'v9.0'
-          });
-        };
 
-        (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
-        fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));</script>
-
-      <!-- Your Chat Plugin code -->
-      <div class="fb-customerchat"
-        attribution=setup_tool
-        page_id="105344178189793"
-  theme_color="#20cef5"
-  logged_in_greeting="Chào bạn mình là Mạnh"
-  logged_out_greeting="Chào bạn mình là Mạnh">
-      </div>
 </body>
 
 </html>

@@ -20,17 +20,18 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
+        <a class="nav-link" href="http://localhost:81/mycv/">Trang chủ <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="thongtin.php">Thông tin <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Kinh nghiệm</a>
+        <a class="nav-link" href="kinhnghiem.php">Kinh nghiệm</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#"> Dự án</a>
+        <a class="nav-link" href="baiviet.php"> Bài viết</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Liên hệ</a>
-      </li>
+    
       
       <li class="nav-item">
         <a class="nav-link" href="logout.php">Đăng xuất</a>

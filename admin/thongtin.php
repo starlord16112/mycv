@@ -14,6 +14,7 @@
        <meta charset="UTF-8">
        <meta name="viewport" content="width=device-width, initial-scale=1.0">
        <title>Quản lí thông tin</title>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
        <style>
              div.thongtin
               {
@@ -89,7 +90,7 @@ if (isset($_POST['up']) && isset($_FILES['fileUpload'])) {
         
             
        <div class="thongtin">
-       <form method="post" action="">
+       <form method="post" action="luu_tt.php?luu=true">
    <div class="form-row">
     <div class="form-group col-md-6">
       <label for="inputEmail4">Tên</label>
@@ -117,27 +118,20 @@ if (isset($_POST['up']) && isset($_FILES['fileUpload'])) {
     
   </div>
   
-  <button type="submit" class="btn btn-primary">Lưu</button>
+  <button type="submit" class="btn btn-primary" name=>Lưu</button>
 </form>
 <?php
- if(isset( $_POST['ten']))
- {
-                  $ten1 = $_POST['ten'];
-                  $email1 =  $_POST['email'];
-                  $sdt1 =  $_POST['sdt'];
-                  $hv1 =  $_POST['hv'];            
-                  $dc1 =  $_POST['dc'];
-             
- if( mysqli_query($conn,"UPDATE thongtin SET ten = '$ten1',sdt = '$sdt1',mail = '$email1',hocvan   = '$hv1',diachi = '$dc1'") == TRUE)
- {
-   echo '<div class="alert alert-success" role="alert">
-  Lưu thành công
-</div>';
- }
+if(isset($_GET['luu']))
+{
+   echo '<script type="text/javascript">
+
+swal("Yessss", "Đã lưu", "success");
+
+
+                        </script>';
 }
-
-
 ?>
        </div>
+       
 </body>
 </html>
